@@ -1,0 +1,85 @@
+---
+title: "Basic Inferential Data Analysis"
+author: "Amelia"
+date: "2/12/2017"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+```
+
+## Load Data and perform basic EDA
+
+
+Basic EDA
+
+```{r boxplot}
+ggplot(data = ToothGrowth, aes(x=supp, y=len, fill=supp, group=supp)) + 
+  geom_boxplot() + 
+  facet_grid(~ dose) +
+  ggtitle("Graph of Tooth Length against Dose Amount by Delivery Method") +
+  labs(y="lenght of tooth")
+
+```
+Graph of Tooth Length against Dose Amount by Delivery Method
+
+
+
+## Basic Summary of Data
+
+The study investigates the effect of Vitamin C on tooth growth in Guinea Pigs. Based on the box plot, the length of tooth growth increases as the dosage increase for both orange juice and ascorbic acid.
+
+## Compare tooth growth by supp and dose
+
+Perform 2 sample t-test for different Delivery Method for 0.5mg/day
+```{r ttest1}
+# Perform 2 sample t-test 
+## 0.5 dose
+Tooth0.5 <- subset(ToothGrowth, dose==0.5)
+t.test(data = Tooth0.5, len~supp,
+       alternative = "two.sided",
+       paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)
+```
+
+The p-value is less than 0.05, we can reject the null hypothesis that delivery by orange juice and ascorbic acid for dosage of 0.5mg/day has no effect on tooth length.
+
+Perform 2 sample t-test for different Delivery Method for 1mg/day
+```{r ttest2}
+## 1 dose
+Tooth1 <- subset(ToothGrowth, dose==1)
+t.test(data = Tooth1, len~supp,
+       alternative = "two.sided",
+       paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)
+```
+
+The p-value is less than 0.05, we can reject the null hypothesis that delivery by orange juice and ascorbic acid for dosage of 1mg/day has no effect on tooth length.
+
+Perform 2 sample t-test for different Delivery Method for 2mg/day
+```{r ttest23}
+## 2 dose
+Tooth2 <- subset(ToothGrowth, dose==2)
+t.test(data = Tooth2, len~supp,
+       alternative = "two.sided",
+       paired = FALSE, var.equal = FALSE,
+       conf.level = 0.95)
+```
+
+The p-value is more than 0.05, we cannot reject the null hypothesis that delivery by orange juice and ascorbic acid for dosage of 2mg/day has no effect on tooth length.
+
+## Conclusion
+The tooth length is positively correlated to Vitamin C dosage for the doses studied (0.5, 1, 2mg/day) for both delivery method by orange juice and ascorbic acid.
+Delivery by orange juice and ascorbic acid has effect on tooth length of guinea pigs in doses 0.5 and 1 mg/day, but no effect for 2mg/day. 
+
+## Assumptions
+1. Test subjects (Guinea Pigs) are on similar diets with no additional intake of vitamin C throught their daily diets (e.g.vegetables/fruits).
+2. Test subjects randomly selected for the different treatments.
+
+<br/>
+<br/>
+.
+
+
+
+
